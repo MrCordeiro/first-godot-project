@@ -10,6 +10,7 @@ var vel : Vector2 = Vector2()
 
 onready var sprite : Sprite = get_node("Sprite")
 
+# this function gets called at a steady 60 times per second
 func _physics_process(delta):
 	
 	vel.x = 0
@@ -38,3 +39,6 @@ func _physics_process(delta):
 		sprite.flip_h = true
 	elif vel.x > 0:
 		sprite.flip_h = false
+
+func die():
+	get_tree().reload_current_scene()
