@@ -2,9 +2,9 @@ extends KinematicBody2D
 
 var score : int = 0
 
-var speed : int = 400
-var jumpForce : int = 600
-var gravity : int = 800
+var SPEED : int = 400
+var JUMP_FORCE : int = 600
+var GRAVITY : int = 800
 
 var vel : Vector2 = Vector2()
 
@@ -19,10 +19,17 @@ func _physics_process(delta):
 	
 	# Movement inputs
 	if Input.is_action_pressed("move_left"):
-			vel.x -= speed
-	if Input.is_action_pressed("move_right"):
-			vel.x += speed
-			
+			vel.x -= SPEED
+			$Sprite.play("walk")
+	elif Input.is_action_pressed("move_right"):
+			vel.x += SPEED
+			$Sprite.play("walk")
+	else:
+		$Sprite.play("idle")
+	
+	if not is_on_floor():
+		$Sprite.play("jump")
+
 	# Applying the velocity
 	# move_and_slide() method moves the body along a given vector, and if the 
 	# body collides with another, it will slide along the other body. This is 
@@ -30,11 +37,11 @@ func _physics_process(delta):
 	vel = move_and_slide(vel, Vector2.UP)
 	
 	# Gravity
-	vel.y += gravity * delta
+	vel.y += GRAVITY * delta
 	
 	# Jump input
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		vel.y -= jumpForce
+		vel.y -= JUMP_FORCE
 	
 	# Sprite direction
 	if vel.x < 0:
