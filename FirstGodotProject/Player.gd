@@ -42,3 +42,6 @@ func _physics_process(delta):
 
 func die():
 	get_tree().reload_current_scene()
+
+func collect_coin(value):
+	score += value
